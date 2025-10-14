@@ -21,7 +21,7 @@ const bucket = new aws.s3.Bucket("static-website-bucket", {
 });
 
 // Configure static website hosting
-const websiteConfiguration = new aws.s3.BucketWebsiteConfigurationV2("website-config", {
+const websiteConfiguration = new aws.s3.BucketWebsiteConfiguration("website-config", {
     bucket: bucket.id,
     indexDocument: {
         suffix: "index.html",
