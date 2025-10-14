@@ -1,0 +1,17 @@
+0 verbose cli /usr/bin/node /usr/lib/node_modules/npm/bin/npm-cli.js
+1 info using npm@10.9.3
+2 info using node@v22.20.0
+3 silly config load:file:/usr/lib/node_modules/npm/npmrc
+4 silly config load:file:/workspace/.npmrc
+5 silly config load:file:/usr/etc/npmrc
+6 verbose title npm exec tsc --noEmit
+7 verbose argv "exec" "--" "tsc" "--noEmit"
+8 verbose logfile logs-max:10 dir:/workspace/.npm/_logs/2025-10-14T16_40_37_737Z-
+9 verbose logfile /workspace/.npm/_logs/2025-10-14T16_40_37_737Z-debug-0.log
+10 silly logfile done cleaning log files
+11 verbose cwd /workspace
+12 verbose os Linux 6.1.134-6.224.amzn2023.aarch64
+13 verbose node v22.20.0
+14 verbose npm  v10.9.3
+15 verbose exit 2
+16 verbose code 2
