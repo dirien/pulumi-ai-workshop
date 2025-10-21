@@ -1,0 +1,11 @@
+name: nginx-k8s-deployment
+description: Kubernetes deployment of Nginx on DigitalOcean cluster
+runtime:
+  name: python
+  options:
+    toolchain: pip
+    virtualenv: venv
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: kubernetes-python
