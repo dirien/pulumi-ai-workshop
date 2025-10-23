@@ -1,0 +1,5 @@
+config:
+  aws:region: us-east-1
+  ollama-gpu-server:ollamaApiPort: "11434"
+environment:
+  - pulumi-idp/auth

@@ -1,0 +1,10 @@
+name: ollama-gpu-server
+description: Ollama GPU server on AWS with g4dn.xlarge instance
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: aws-typescript
