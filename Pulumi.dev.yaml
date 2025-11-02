@@ -1,0 +1,5 @@
+environment:
+  - pulumi-idp/auth
+config:
+  pulumi-ai-workshop:ollamaApiPort: "11434"
+  pulumi-ai-workshop:awsRegion: us-east-1
