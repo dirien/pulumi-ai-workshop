@@ -1,0 +1,9 @@
+name: argocd-deployment
+description: Deploy Argo CD to Kubernetes using private registry component
+runtime: go
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: kubernetes-go
+packages:
+  argocd-component: git://github.com/dirien/pulumi-ai-workshop-components@0.0.0-xee7e738f1ec04447ff13e61523c646a80f74fc1b
