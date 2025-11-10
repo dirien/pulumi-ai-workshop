@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Environment Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto">
+            <!-- Header -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                <h1 class="text-4xl font-bold text-indigo-600 mb-2">Environment Dashboard</h1>
+                <p class="text-gray-600">Real-time environment details from backend API</p>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loading" class="bg-white rounded-lg shadow-lg p-8 text-center">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto"></div>
+                <p class="mt-4 text-gray-600">Loading environment details...</p>
+            </div>
+
+            <!-- Error State -->
+            <div id="error" class="hidden bg-red-50 border border-red-200 rounded-lg shadow-lg p-6">
+                <div class="flex items-center mb-4">
+                    <svg class="w-6 h-6 text-red-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <h2 class="text-xl font-semibold text-red-800">Error Loading Data</h2>
+                </div>
+                <p id="error-message" class="text-red-700"></p>
+                <button onclick="fetchEnvironmentData()" class="mt-4 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded transition duration-200">
+                    Retry
+                </button>
+            </div>
+
+            <!-- Data Display -->
+            <div id="data" class="hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- System Information -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h2 class="text-2xl font-semibold text-indigo-600 mb-4 flex items-center">
+                            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
+                            </svg>
+                            System Information
+                        </h2>
+                        <div class="space-y-3">
+                            <div class="flex justify-between border-b pb-2">
+                                <span class="font-medium text-gray-700">Hostname:</span>
+                                <span id="hostname" class="text-gray-900"></span>
+                            </div>
+                            <div class="flex justify-between border-b pb-2">
+                                <span class="font-medium text-gray-700">Platform:</span>
+                                <span id="platform" class="text-gray-900"></span>
+                            </div>
+                            <div class="flex justify-between border-b pb-2">
+                                <span class="font-medium text-gray-700">Architecture:</span>
+                                <span id="architecture" class="text-gray-900"></span>
+                            </div>
+                            <div class="flex justify-between border-b pb-2">
+                                <span class="font-medium text-gray-700">CPUs:</span>
+                                <span id="cpus" class="text-gray-900"></span>
+                            </div>
+                            <div class="flex justify-between border-b pb-2">
+                                <span class="font-medium text-gray-700">Node Version:</span>
+                                <span id="nodeVersion" class="text-gray-900"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Memory Information -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h2 class="text-2xl font-semibold text-indigo-600 mb-4 flex items-center">
+                            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                            Memory & Runtime
+                        </h2>
+                        <div class="space-y-3">
+                            <div class="flex justify-between border-b pb-2">
+                                <span class="font-medium text-gray-700">Total Memory:</span>
+                                <span id="totalMemory" class="text-gray-900"></span>
+                            </div>
+                            <div class="flex justify-between border-b pb-2">
+                                <span class="font-medium text-gray-700">Free Memory:</span>
+                                <span id="freeMemory" class="text-gray-900"></span>
+                            </div>
+                            <div class="flex justify-between border-b pb-2">
+                                <span class="font-medium text-gray-700">Uptime:</span>
+                                <span id="uptime" class="text-gray-900"></span>
+                            </div>
+                            <div class="flex justify-between border-b pb-2">
+                                <span class="font-medium text-gray-700">Environment:</span>
+                                <span id="environment" class="text-gray-900"></span>
+                            </div>
+                            <div class="flex justify-between border-b pb-2">
+                                <span class="font-medium text-gray-700">Timestamp:</span>
+                                <span id="timestamp" class="text-gray-900 text-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kubernetes Information -->
+                    <div class="bg-white rounded-lg shadow-lg p-6 md:col-span-2">
+                        <h2 class="text-2xl font-semibold text-indigo-600 mb-4 flex items-center">
+                            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
+                            </svg>
+                            Kubernetes Pod Information
+                        </h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="border-b md:border-b-0 md:border-r pb-3 md:pb-0 md:pr-4">
+                                <span class="font-medium text-gray-700 block mb-1">Pod Name:</span>
+                                <span id="podName" class="text-gray-900 break-all"></span>
+                            </div>
+                            <div class="border-b md:border-b-0 md:border-r pb-3 md:pb-0 md:pr-4">
+                                <span class="font-medium text-gray-700 block mb-1">Namespace:</span>
+                                <span id="podNamespace" class="text-gray-900"></span>
+                            </div>
+                            <div>
+                                <span class="font-medium text-gray-700 block mb-1">Pod IP:</span>
+                                <span id="podIP" class="text-gray-900"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Refresh Button -->
+                <div class="mt-6 text-center">
+                    <button onclick="fetchEnvironmentData()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition duration-200 transform hover:scale-105">
+                        <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                        </svg>
+                        Refresh Data
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const BACKEND_URL = window.location.hostname === 'localhost' 
+            ? 'http://localhost:3000' 
+            : 'http://backend-service:3000';
+
+        async function fetchEnvironmentData() {
+            const loadingEl = document.getElementById('loading');
+            const errorEl = document.getElementById('error');
+            const dataEl = document.getElementById('data');
+
+            // Show loading state
+            loadingEl.classList.remove('hidden');
+            errorEl.classList.add('hidden');
+            dataEl.classList.add('hidden');
+
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/environment`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+
+                // Update UI with data
+                document.getElementById('hostname').textContent = data.hostname;
+                document.getElementById('platform').textContent = data.platform;
+                document.getElementById('architecture').textContent = data.architecture;
+                document.getElementById('cpus').textContent = data.cpus;
+                document.getElementById('totalMemory').textContent = data.totalMemory;
+                document.getElementById('freeMemory').textContent = data.freeMemory;
+                document.getElementById('uptime').textContent = data.uptime;
+                document.getElementById('nodeVersion').textContent = data.nodeVersion;
+                document.getElementById('environment').textContent = data.environment;
+                document.getElementById('timestamp').textContent = new Date(data.timestamp).toLocaleString();
+                document.getElementById('podName').textContent = data.podName;
+                document.getElementById('podNamespace').textContent = data.podNamespace;
+                document.getElementById('podIP').textContent = data.podIP;
+
+                // Show data
+                loadingEl.classList.add('hidden');
+                dataEl.classList.remove('hidden');
+            } catch (error) {
+                console.error('Error fetching environment data:', error);
+                document.getElementById('error-message').textContent = error.message;
+                loadingEl.classList.add('hidden');
+                errorEl.classList.remove('hidden');
+            }
+        }
+
+        // Fetch data on page load
+        fetchEnvironmentData();
+
+        // Auto-refresh every 30 seconds
+        setInterval(fetchEnvironmentData, 30000);
+    </script>
+</body>
+</html>
