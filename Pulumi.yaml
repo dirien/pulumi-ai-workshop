@@ -1,0 +1,10 @@
+name: strands-agent-demo
+description: Demo Strands agent deployed with AWS Bedrock AgentCore
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: aws-typescript
