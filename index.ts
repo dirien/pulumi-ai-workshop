@@ -19,7 +19,7 @@ const image = new docker.Image("strands-agent-image", {
     build: {
         context: "./agent",
         dockerfile: "./agent/Dockerfile",
-        platform: "linux/amd64", // AgentCore requires amd64
+        platform: "linux/arm64", // AgentCore requires arm64
     },
     registry: {
         server: repo.repositoryUrl,
