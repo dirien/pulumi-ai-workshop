@@ -1,0 +1,4 @@
+environment:
+  - pulumi-idp/auth
+config:
+  aws:region: eu-central-1

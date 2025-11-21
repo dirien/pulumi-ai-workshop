@@ -1,0 +1,6 @@
+name: pulumi-ai-workshop
+runtime:
+  name: nodejs
+  options:
+    typescript: true
+description: AWS S3 Static Website with Pulumi - AI Workshop Demo
