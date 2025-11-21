@@ -88,7 +88,7 @@ const bedrockRolePolicy = new aws.iam.RolePolicy("agentcore-bedrock-policy", {
 
 // Deploy the AgentCore Agent Runtime
 const agentRuntime = new aws.bedrock.AgentcoreAgentRuntime("strands-agent-runtime", {
-    agentRuntimeName: "strands-demo-agent",
+    agentRuntimeName: "strands_demo_agent",
     description: "Demo Strands agent with calculator tool",
     roleArn: agentRole.arn,
     agentRuntimeArtifact: {
