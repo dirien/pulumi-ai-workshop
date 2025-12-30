@@ -1,0 +1,23 @@
+# Pulumi
+.pulumi/
+
+# Node
+node_modules/
+package-lock.json
+yarn.lock
+
+# TypeScript
+*.js
+*.d.ts
+tsconfig.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

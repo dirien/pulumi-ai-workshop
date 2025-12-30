@@ -1,0 +1,8 @@
+config:
+  gcp:project: your-gcp-project-id
+  gcp:region: us-central1
+  pulumi-ai-workshop:dbTier: db-g1-small
+  pulumi-ai-workshop:dbVersion: POSTGRES_15
+  pulumi-ai-workshop:n8nImage: n8nio/n8n:latest
+  # Optional: Set custom webhook URL for custom domains
+  # pulumi-ai-workshop:webhookUrl: https://your-domain.com
