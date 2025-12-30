@@ -1,0 +1,5 @@
+environment:
+  - pulumi-idp/auth
+config:
+  gcp:project: "5419011357"
+  gcp:region: us-central1
